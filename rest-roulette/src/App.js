@@ -5,6 +5,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
+import Roulette from "./pages/Roulette";
 import "./App.css";
 
 function App() {
@@ -13,10 +14,11 @@ function App() {
 			<Navbar />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
-				<Route path="/contact-us" element={<Contact />} />
-				<Route path="/Sign-up" element={<SignUp />} />
-				<Route path="/log-in" element={<LogIn />} />
+				<Route path="roulette" element={<Roulette />} />
+				<Route path="about" element={<About />} />
+				<Route path="contact-us" element={<Contact />} />
+				<Route path="Sign-up" element={<SignUp />} />
+				<Route path="log-in" element={<LogIn />} />
 			</Routes>
 		</Router>
 
