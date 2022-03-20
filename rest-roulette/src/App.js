@@ -6,7 +6,9 @@ import Contact from "./pages/Contact";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Roulette from "./pages/Roulette";
+import Results from "./pages/Results";
 import "./App.css";
+
 
 function App() {
 	return (
@@ -15,6 +17,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="roulette" element={<Roulette />} />
+				<Route	path="results" element={<Results/>}/>
 				<Route path="about" element={<About />} />
 				<Route path="contact-us" element={<Contact />} />
 				<Route path="Sign-up" element={<SignUp />} />
