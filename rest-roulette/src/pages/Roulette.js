@@ -44,22 +44,17 @@ const Roulette = () => {
 					mustStartSpinning={mustSpin}
 					prizeNumber={prizeNumber}
 					data={data}
-					outerBorderColor={["#f2f2f2"]}
+					outerBorderColor={["#221f1f"]}
 					outerBorderWidth={[10]}
-					innerBorderColor={["#f2f2f2"]}
-					radiusLineColor={["#dedede"]}
+					// innerRadius={[]}
+					innerBorderColor={["#221f1f"]}
+					radiusLineColor={["#221f1f"]}
 					radiusLineWidth={[5]}
-					textColors={["#ffffff"]}
+					textColors={["#221f1f"]}
 					fontSize={[20]}
+					textDistance={[80]}
 					perpendicularText={[true]}
-					backgroundColors={[
-						"#F22B35",
-						"#F99533",
-						"#24CA69",
-						"#514E50",
-						"#46AEFF",
-						"#9145B7",
-					]}
+					backgroundColors={["#dc2f02", "#f5f3f4"]}
 					onStopSpinning={() => {
 						setMustSpin(false);
 						setShowResults(true);
@@ -69,15 +64,15 @@ const Roulette = () => {
 					SPIN
 				</button>
 				<br />
-				
+
 				<h2>
 					{!mustSpin
 						? data[prizeNumber].option
 						: "Spinnng the Wheel..."}
 				</h2>
-				<h2>Below is the variable you can use to pass to api call</h2>
+				{/* <h2>Below is the variable you can use to pass to api call</h2>
 				<br></br>
-				<h3>{finalCusine}</h3>
+				<h3>{finalCusine}</h3> */}
 				<br></br>
 				<br></br>
 				<div
@@ -85,10 +80,10 @@ const Roulette = () => {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
+						marginBottom: "50px",
 					}}>
 					{showResults ? <ResultsBtn /> : null}
 				</div>
-				<hr />
 			</div>
 		</>
 	);
