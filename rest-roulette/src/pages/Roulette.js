@@ -3,14 +3,14 @@ import { Wheel } from "react-custom-roulette";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
 
 const data = [
-	{ option: "Chinese" },
-	{ option: "Mexican" },
-	{ option: "Italian" },
-	{ option: "Korean" },
-	{ option: "Greek" },
-	{ option: "Indian" },
-	{ option: "Moroccan" },
-	{ option: "BBQ" },
+	{ option: "chinese" },
+	{ option: "mexican" },
+	{ option: "italian" },
+	{ option: "korean" },
+	{ option: "greek" },
+	{ option: "spanish" },
+	{ option: "moroccan" },
+	{ option: "japanese" },
 ];
 
 let finalCusine = "";
