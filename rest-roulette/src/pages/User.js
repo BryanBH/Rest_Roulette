@@ -3,7 +3,7 @@ import image from "../images/image.jpg";
 import "../css/Homepage.css";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement"
 import "../css/user.css";
-import EditButton from 'react-edit-button'
+// import EditButton from 'react-edit-button'
 import React, { useState } from 'react'
 const User = () => {
 	var nameIsShown = false;

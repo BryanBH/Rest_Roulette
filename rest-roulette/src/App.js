@@ -8,6 +8,7 @@ import LogIn from "./pages/LogIn";
 import Roulette from "./pages/Roulette";
 import Results from "./pages/Results";
 import ResultsWIP from "./pages/ResultsWIP"
+import User from "./pages/User";
 // import Fecth from "./components/Fetch/Fecth";
 import "./App.css";
 

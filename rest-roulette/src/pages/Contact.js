@@ -10,7 +10,7 @@ const Contact = () => {
 					alignItems: "center",
 					height: "90vh",
 				}}>
-				<h1> THIS IS THE CONTACT PAGE</h1>
+				<h1> CONTACT PAGE</h1>
 			</div>
 		</>
 	);

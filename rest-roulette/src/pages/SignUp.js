@@ -1,37 +1,58 @@
 import React from "react";
+// import '../css/LogIn.css'
 
 const SignUp = () => {
 	return (
-	<div className="login-container">
-		<form className="form-login">
-		<h3 className="title">Register</h3>
+		<div className="login-container">
+			<form className="form-login">
+				<h3 className="title" style={{ margin: "10rem 0 3rem 0 " }}>
+					Register
+				</h3>
 
-		<div className="form-group">
-			<label>First name</label>
-			<input type="text" className="form-control" placeholder="First name" />
+				<div className="form-group">
+					<label>First name</label>
+					<input
+						type="text"
+						className="form-control"
+						placeholder="First name"
+					/>
+				</div>
+
+				<div className="form-group">
+					<label>Last name</label>
+					<input
+						type="text"
+						className="form-control"
+						placeholder="Last name"
+					/>
+				</div>
+
+				<div className="form-group">
+					<label>Email</label>
+					<input
+						type="email"
+						className="form-control"
+						placeholder="Enter email"
+					/>
+				</div>
+
+				<div className="form-group">
+					<label>Password</label>
+					<input
+						type="password"
+						className="form-control"
+						placeholder="Enter password"
+					/>
+				</div>
+
+				<button type="submit" className="login-button">
+					Register
+				</button>
+				<p className="forgot-password text-right">
+					Already registered <a href="/log-in">log in?</a>
+				</p>
+			</form>
 		</div>
-
-		<div className="form-group">
-			<label>Last name</label>
-			<input type="text" className="form-control" placeholder="Last name" />
-		</div>
-
-		<div className="form-group">
-			<label>Email</label>
-			<input type="email" className="form-control" placeholder="Enter email" />
-		</div>
-
-		<div className="form-group">
-			<label>Password</label>
-			<input type="password" className="form-control" placeholder="Enter password" />
-		</div>
-
-		<button type="submit" className="login-button">Register</button>
-		<p className="forgot-password text-right">
-			Already registered <a href="/#">log in?</a>
-		</p>
-	</form>
-	</div>
 	);
 };
 

@@ -30,7 +30,7 @@ const Roulette = () => {
 
 	const ResultsBtn = () => {
 		return (
-			<NavBtn>
+			<NavBtn style={{marginLeft:"2rem"}}>
 				<NavBtnLink to="/results">See Results</NavBtnLink>
 			</NavBtn>
 		);
@@ -38,7 +38,7 @@ const Roulette = () => {
 	return (
 		<>
 			<div align="center">
-				<h1 align="center">Roulette Game</h1>
+				<h1 align="center">Let The Wheel Decide...</h1>
 				<hr />
 				<Wheel
 					mustStartSpinning={mustSpin}
@@ -89,10 +89,5 @@ const Roulette = () => {
 	);
 };
 
-// const resultCusine = () => {
-// 	return (
-// 		{finalCusine}
-// 	)
-// }
 export { finalCusine };
 export default Roulette;

@@ -7,7 +7,7 @@ const LogIn = () => {
 		<div className="login-container">
 			<form className="form-login">
 
-				<h3 className="title">Log In</h3>
+				<h3 className="title" style={{margin:"3rem"}}>Log In</h3>
 
 				<div className="form-group">
 					<label className="form-label">Email</label>

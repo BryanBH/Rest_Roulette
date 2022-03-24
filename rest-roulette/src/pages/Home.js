@@ -9,7 +9,7 @@ const Home = () => {
 			<section className="title-container">
 				<img src={Logo} alt="logo" className="main-logo" />
 				<h1 className="title">Rest Roulette</h1>
-				<NavBtn>
+				<NavBtn style={{margin: "2rem"}}>
 					<NavBtnLink to="roulette">Start Now!</NavBtnLink>
 				</NavBtn>
 			</section>
