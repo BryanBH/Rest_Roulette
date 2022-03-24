@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Roulette from "./pages/Roulette";
 import Results from "./pages/Results";
+import User from "./pages/User";
 import "./App.css";
 
 
@@ -22,6 +23,7 @@ function App() {
 				<Route path="contact-us" element={<Contact />} />
 				<Route path="Sign-up" element={<SignUp />} />
 				<Route path="log-in" element={<LogIn />} />
+				<Route path="User" element={<User />} />
 			</Routes>
 		</Router>
 
