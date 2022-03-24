@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Roulette from "./pages/Roulette";
 import Results from "./pages/Results";
+import ResultsWIP from "./pages/ResultsWIP"
 // import Fecth from "./components/Fetch/Fecth";
 import "./App.css";
 
@@ -19,6 +20,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="roulette" element={<Roulette />} />
 				<Route	path="results" element={<Results/>}/>
+				<Route	path="resultsWIP" element={<ResultsWIP/>}/>
 				<Route path="about" element={<About />} />
 				<Route path="contact-us" element={<Contact />} />
 				<Route path="Sign-up" element={<SignUp />} />
