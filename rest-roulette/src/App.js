@@ -7,7 +7,6 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import Roulette from "./pages/Roulette";
 import Results from "./pages/Results";
-import User from "./pages/User";
 import "./App.css";
 
 
