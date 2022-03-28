@@ -15,7 +15,9 @@ app.get("/getYelpAPI", (req, res) => {
 	var options = {
 		categories: req.query.categories,
 		location: req.query.location,
-		limit: 10,
+		latitude: req.query.latitude,
+		longitude: req.query.longitude,
+		limit: 5,
 	};
 	const client = yelp.client(key);
 
@@ -32,6 +34,7 @@ app.get("/getYelpAPI", (req, res) => {
 					name: business.name,
 					rating: business.rating,
 					phoneNumber: business.display_phone,
+					imageUrl: business.image_url,
 				});
 			}
 			// sending created object back to the ApiResult component

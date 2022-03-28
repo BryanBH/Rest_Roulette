@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
-
+import useGeolocation from "../hooks/useGeolocation";
 const data = [
 	{ option: "chinese" },
 	{ option: "mexican" },
@@ -14,11 +14,19 @@ const data = [
 ];
 
 let finalCusine = "";
+let longitude;
+let latitude;
 
 const Roulette = () => {
 	const [mustSpin, setMustSpin] = useState(false);
 	const [showResults, setShowResults] = useState(false);
 	const [prizeNumber, setPrizeNumber] = useState(0);
+	const location = useGeolocation();
+
+	if (location.loaded) {
+		latitude = location.coordinates.lat;
+		longitude = location.coordinates.lng;
+	}
 
 	const handleSpinClick = () => {
 		const newPrizeNumber = Math.floor(Math.random() * data.length);
@@ -30,7 +38,7 @@ const Roulette = () => {
 
 	const ResultsBtn = () => {
 		return (
-			<NavBtn style={{marginLeft:"2rem"}}>
+			<NavBtn style={{ marginLeft: "2rem" }}>
 				<NavBtnLink to="/results">See Results</NavBtnLink>
 			</NavBtn>
 		);
@@ -70,9 +78,7 @@ const Roulette = () => {
 						? data[prizeNumber].option
 						: "Spinnng the Wheel..."}
 				</h2>
-				{/* <h2>Below is the variable you can use to pass to api call</h2>
-				<br></br>
-				<h3>{finalCusine}</h3> */}
+				
 				<br></br>
 				<br></br>
 				<div
@@ -89,5 +95,5 @@ const Roulette = () => {
 	);
 };
 
-export { finalCusine };
+export { longitude, latitude, finalCusine };
 export default Roulette;
