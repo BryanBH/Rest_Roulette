@@ -1,4 +1,3 @@
-const { json } = require("express");
 const express = require("express");
 const app = express();
 const port = 5000;
@@ -14,7 +13,7 @@ app.get("/getYelpAPI", (req, res) => {
 
 	var options = {
 		categories: req.query.categories,
-		location: req.query.location,
+		// location: req.query.location,
 		latitude: req.query.latitude,
 		longitude: req.query.longitude,
 		limit: 5,

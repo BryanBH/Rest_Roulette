@@ -10,7 +10,7 @@ const ApiResult = () => {
 			.get("/getYelpAPI", {
 				params: {
 					categories: finalCusine,
-					location: "boston",
+					// location: "boston",
 					latitude: latitude,
 					longitude: longitude,
 				},
