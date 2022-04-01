@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../css/Contactpage.css";
 
 const Contact = () => {
 	const [status, setStatus] = useState("Submit");
@@ -11,7 +12,7 @@ const Contact = () => {
 			email: email.value,
 			message: message.value,
 		};
-		let response = await fetch("http://localhost:5000/contact", {
+		let response = await fetch("/contact", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=utf-8",
@@ -23,21 +24,41 @@ const Contact = () => {
 		alert(result.status);
 	};
 	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<label htmlFor="name">Name:</label>
-				<input type="text" id="name" required />
+		<div className="contactpage-conatiner">
+			<div className="form-info">
+				<h1>Give us your feedback!</h1>
+				<p>
+					Let us know what you think about Rest Roulette and how we
+					can improve this page
+				</p>
 			</div>
-			<div>
-				<label htmlFor="email">Email:</label>
-				<input type="email" id="email" required />
+			<div className="form-container">
+				<form onSubmit={handleSubmit}>
+					<div className="form-section">
+						<label htmlFor="name" className="label">
+							Name:
+						</label>
+						<input type="text" id="name" required />
+					</div>
+					<div className="form-section">
+						<label htmlFor="email" className="label">
+							Email:
+						</label>
+						<input type="email" id="email" required />
+					</div>
+					<div className="form-section">
+						<label htmlFor="message" className="label">
+							Message:
+						</label>
+						<textarea id="message" required />
+					</div>
+
+					<div className="btn">
+						<button type="submit">{status}</button>
+					</div>
+				</form>
 			</div>
-			<div>
-				<label htmlFor="message">Message:</label>
-				<textarea id="message" required />
-			</div>
-			<button type="submit">{status}</button>
-		</form>
+		</div>
 	);
 };
 

@@ -1,5 +1,5 @@
 :root {
-	--aboutgradient: linear-gradient(-45deg, #f48c06, #faa307, #ffba08);
+	--aboutgradient: linear-gradient(-45deg, #ffaa42, #faa307, #ffba08);
 	font-family: "Roboto", sans-serif;
 }
 @keyframes bg-animation {
@@ -33,7 +33,7 @@
 .about-title {
 	font-weight: 700;
 	font-size: 3rem;
-	transform: skewX(-10deg);
+	transform: skew(-10deg);
 	text-transform: capitalize;
 }
 
@@ -73,6 +73,7 @@
 
 .collaborator:hover {
 	border: 1px solid black;
+	box-shadow: 2px 2px 2px black;
 	border-radius: 10%;
 	background-color: #c67600;
 	color: #ffff;

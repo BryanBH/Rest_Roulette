@@ -1,5 +1,9 @@
 const express = require("express");
+const cors = require("cors");
+const nodemailer = require("nodemailer");
 const app = express();
+app.use(cors());
+app.use(express.json());
 const port = 5000;
 
 const yelp = require("yelp-fusion");
@@ -7,7 +11,6 @@ const yelp = require("yelp-fusion");
 // get function to call yelp APi
 app.get("/getYelpAPI", (req, res) => {
 	// requests
-
 	const key =
 		"e1wKGcbUYGY-WsYjSvhbF3R0my11_JefuLR3z-W4gdGf2PZYJdvD2GEwolroAdtlDoTX7TIoAscQbDwiS3v02h1k3lYAJefop2mmi_7CSgSRhY2N7D20eDx6vss4YnYx";
 
@@ -44,6 +47,42 @@ app.get("/getYelpAPI", (req, res) => {
 		});
 });
 
+const contactEmail = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: "bryanbenjumea@gmail.com",
+		pass: "uujlrzcxeuzvyosv",
+	},
+});
+
+contactEmail.verify((error) => {
+	if (error) {
+		console.log(error);
+	} else {
+		console.log("Ready to Send");
+	}
+});
+
+app.post("/contact", (req, res) => {
+	const name = req.body.name;
+	const email = req.body.email;
+	const message = req.body.message;
+	const mail = {
+		from: name,
+		to: "bryanbenjumea@gmail.com",
+		subject: "Contact Form Submission",
+		html: `<p>Name: ${name}</p>
+           <p>Email: ${email}</p>
+           <p>Message: ${message}</p>`,
+	};
+	contactEmail.sendMail(mail, (error) => {
+		if (error) {
+			res.json({ status: "ERROR" });
+		} else {
+			res.json({ status: "Message Sent" });
+		}
+	});
+});
 app.listen(port, () => {
 	console.log(`App listening on port ${port}`);
 });
