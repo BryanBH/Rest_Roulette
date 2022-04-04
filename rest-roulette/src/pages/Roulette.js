@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
 import useGeolocation from "../hooks/useGeolocation";
