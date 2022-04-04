@@ -3,20 +3,21 @@ import { Wheel } from "react-custom-roulette";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
 import useGeolocation from "../hooks/useGeolocation";
 import Select from "react-select";
+import allowedCategories from "../json/categories.json";
 
 /**
  * Initial cuisine type data
  */
 const data = [
-	{ option: "chinese", label: "Chinese" },
-	{ option: "mexican", label: "Mexican" },
-	{ option: "italian", label: "Italian" },
-	{ option: "korean", label: "Korean" },
-	{ option: "greek", label: "Greek" },
-	{ option: "spanish", label: "Spanish" },
-	{ option: "moroccan", label: "Moroccan" },
-	{ option: "japanese", label: "Japanese" },
-	{ option: "colombian", label: "Colombian" },
+	// { option: "chinese", label: "Chinese" },
+	{ option: "Mexican", label: "Mexican" },
+	{ option: "Italian", label: "Italian" },
+	{ option: "Korean", label: "Korean" },
+	{ option: "Greek", label: "Greek" },
+	{ option: "Spanish", label: "Spanish" },
+	{ option: "Moroccan", label: "Moroccan" },
+	{ option: "Japanese", label: "Japanese" },
+	{ option: "Colombian", label: "Colombian" },
 ];
 
 let finalCusine = "";
@@ -29,11 +30,19 @@ const Roulette = () => {
 	const [prizeNumber, setPrizeNumber] = useState(0);
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [list, updateList] = useState(data);
+	const [userInput, setUserInput] = useState("");
 
-	const location = useGeolocation();
+	/**
+	 * creates list with all major retaurant categories from the json file
+	 */
+	const restaurantCategoryList = allowedCategories.filter(
+		(object) => object.parents[0] === "restaurants"
+	);
+
 	/**
 	 *  set geo location information
 	 */
+	const location = useGeolocation();
 	if (location.loaded) {
 		latitude = location.coordinates.lat;
 		longitude = location.coordinates.lng;
@@ -49,7 +58,8 @@ const Roulette = () => {
 		setMustSpin(true);
 	};
 
-	finalCusine = data[prizeNumber].option;
+	// sets resulting cuisine type from the wheel spin
+	finalCusine = data[prizeNumber].option.toLowerCase();
 
 	/**
 	 *
@@ -80,13 +90,79 @@ const Roulette = () => {
 			const indexToRemove = data.findIndex((object) => {
 				return object.option === selectedOption.option;
 			});
-
 			updateList(data.splice(indexToRemove, 1));
+			const newPrizeNumber = Math.floor(Math.random() * data.length);
+			setPrizeNumber(newPrizeNumber);
 			console.log(list);
 		}
 	};
 
-	const addCusine = () => {};
+	/**
+	 * sets the userinput value
+	 */
+	const handleUserInput = (e) => {
+		setUserInput(e.target.value);
+	};
+
+	/**
+	 * Helper function that checks to see if the user input is the restaurant catergory list
+	 * @param {userInput} input
+	 * @returns true if it is, false if its not
+	 */
+	const isInputInCatgeoryList = (input) => {
+		const isFound = restaurantCategoryList.some((object) => {
+			let bool = false;
+			if (object.alias === input.toLowerCase()) {
+				bool = true;
+			}
+			return bool;
+		});
+		return isFound;
+	};
+
+	/**
+	 * Helper function that checks to see if the user input is already in the data object
+	 * @param {userInput} input
+	 * @returns true if it is, false other wise
+	 */
+	const isInData = (input) => {
+		let bool = false;
+		for (let object of data) {
+			if (object.option === input.toLowerCase()) {
+				bool = true;
+			} else bool = false;
+		}
+
+		return bool;
+	};
+
+	/**
+	 * function compares user input to category list and data list. If it is an acceptable category, it is aded to the data list, if not the user is alerted with the reason.
+	 */
+	const addCusine = () => {
+		const isInList = isInputInCatgeoryList(userInput);
+		const alreadyInData = isInData(userInput);
+
+		if (alreadyInData) {
+			alert(
+				`${userInput} is already on the wheel, Try different cusine type`
+			);
+			setUserInput("");
+		} else if (isInList && !alreadyInData) {
+			data.push({
+				option: userInput.toLowerCase(),
+				label: userInput.charAt(0).toUpperCase() + userInput.slice(1),
+			});
+			updateList(data);
+			// console.log(data);
+			setUserInput("");
+		} else if (!isInList) {
+			alert(
+				`${userInput} is not a major category. Try different cusine type`
+			);
+			setUserInput("");
+		}
+	};
 
 	// rendering
 	return (
@@ -122,7 +198,9 @@ const Roulette = () => {
 				<div>
 					<h2>
 						{!mustSpin
-							? data[prizeNumber].option
+							? `${finalCusine
+									.charAt(0)
+									.toUpperCase()}${finalCusine.slice(1)}`
 							: "Spinnng the Wheel..."}
 					</h2>
 				</div>
@@ -153,7 +231,11 @@ const Roulette = () => {
 						alignItems: "center",
 					}}>
 					<label htmlFor="add">Add a cusine type to the wheel</label>
-					<input type="text" name="add"></input>
+					<input
+						type="text"
+						value={userInput}
+						onInput={handleUserInput}
+						name="add"></input>
 					<button onClick={addCusine}>Add</button>
 				</div>
 				<br></br>
