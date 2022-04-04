@@ -37,6 +37,15 @@ app.get("/getYelpAPI", (req, res) => {
 					rating: business.rating,
 					phoneNumber: business.display_phone,
 					imageUrl: business.image_url,
+					street: business.location.address1,
+					city: business.location.city,
+					state: business.location.state,
+					zipcode: business.location.zip_code,
+					price: business.price,
+					reviewNum: business.review_count,
+					distance: business.distance,
+					url: business.url,
+					id: business.id
 				});
 			}
 			// sending created object back to the ApiResult component

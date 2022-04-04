@@ -15,15 +15,10 @@ export default class Result extends React.Component {
 					alignItems: "center",
 					flexDirection: "column",
 				}}>
-				<h1>The selected cuisine is: {finalCusine}</h1>
 
 				<ApiResult />
 
-				<div style={{ marginLeft: "2rem" }}>
-					<NavBtn>
-						<NavBtnLink to="/roulette">Back to wheel</NavBtnLink>
-					</NavBtn>
-				</div>
+
 			</div>
 		);
 	}
