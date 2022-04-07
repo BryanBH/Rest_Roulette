@@ -11,12 +11,20 @@ import ResultsWIP from "./pages/ResultsWIP"
 import User from "./pages/User";
 // import Fecth from "./components/Fetch/Fecth";
 import "./App.css";
+import { AuthProvider } from "./contexts/AuthContext";
+import {firebaseConfig} from "./firebase"
+
+
 
 
 function App() {
 	return (
+
 		<Router>
+		
+
 			<Navbar />
+			<AuthProvider>
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="roulette" element={<Roulette />} />
@@ -28,7 +36,12 @@ function App() {
 				<Route path="log-in" element={<LogIn />} />
 				<Route path="User" element={<User />} />
 			</Routes>
+
+		</AuthProvider>
+
 		</Router>
+
+
 
 		// <Router>
 		// 	<Navbar />

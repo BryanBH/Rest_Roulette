@@ -1,31 +1,68 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 // import '../css/LogIn.css'
+import { useAuth } from '../contexts/AuthContext'
+// import {Alert} from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 
-const SignUp = () => {
+
+export default function SignUp () {
+
+
+	const emailRef = useRef()
+	const passwordRef = useRef()
+	const nameRef = useRef()
+	const confirmRef = useRef()
+	const { signup, currentUser } = useAuth()
+
+
+	const [error, setError] = useState ('')
+
+
+	// alert
+
+	const [loading, setLoading] = useState (false)
+	const navigate = useNavigate()
+
+
+	async function handleSubmit (e) {
+		e.preventDefault()
+
+		if (passwordRef.current.value !== confirmRef.current.value) {
+			return setError ("Passwords do not match")
+		}
+		try { 
+		setError(' ')
+		setLoading(true)
+		await signup(emailRef.current.value, passwordRef.current.value)
+		navigate("/Roulette")
+
+		} catch {
+			setError("failed to create an account")
+		}
+		setLoading(false)
+
+	}
+
 	return (
+
 		<div className="login-container">
-			<form className="form-login">
+			<form onSubmit = {handleSubmit} className="form-group">
 				<h3 className="title" style={{ margin: "10rem 0 3rem 0 " }}>
 					Register
+					
 				</h3>
+				{/* {error && <Alert variant="danger">{error}</Alert>} */}
 
 				<div className="form-group">
-					<label>First name</label>
+					<label>Name</label>
 					<input
 						type="text"
 						className="form-control"
-						placeholder="First name"
+						placeholder="Enter Name"
+						ref = {nameRef}
 					/>
 				</div>
 
-				<div className="form-group">
-					<label>Last name</label>
-					<input
-						type="text"
-						className="form-control"
-						placeholder="Last name"
-					/>
-				</div>
 
 				<div className="form-group">
 					<label>Email</label>
@@ -33,6 +70,7 @@ const SignUp = () => {
 						type="email"
 						className="form-control"
 						placeholder="Enter email"
+						ref = {emailRef}
 					/>
 				</div>
 
@@ -42,12 +80,25 @@ const SignUp = () => {
 						type="password"
 						className="form-control"
 						placeholder="Enter password"
+						ref = {passwordRef}
 					/>
 				</div>
 
-				<button type="submit" className="login-button">
+				
+				<div className="form-group">
+					<label>Confrim Password</label>
+					<input
+						type="password"
+						className="form-control"
+						placeholder="Confirm Password"
+						ref =  {confirmRef}
+					/>
+				</div>
+
+				<button disable={loading} type="submit" className="login-button">
 					Register
 				</button>
+
 				<p className="forgot-password text-right">
 					Already registered <a href="/log-in">log in?</a>
 				</p>
@@ -56,4 +107,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+// export default SignUp;

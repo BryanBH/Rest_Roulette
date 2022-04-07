@@ -5,6 +5,9 @@ import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement"
 import "../css/user.css";
 // import EditButton from 'react-edit-button'
 import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from '../contexts/AuthContext'
+
 const User = () => {
 	var nameIsShown = false;
 	const [name, setName] = useState(null);
@@ -13,6 +16,9 @@ const User = () => {
 	const [printEmail, setPrintE] = useState(false);
 	const [showN, setShowN] = useState(false);
 	const [showE, setShowE] = useState(false);
+	const [error, setError] = useState("")
+	const { currentUser, logout } = useAuth()
+	const navigate = useNavigate()
 	function getName(val)
 	{
 		setName(val.target.value)
@@ -20,6 +26,17 @@ const User = () => {
 	function getEmail(val) {
 		setEmail(val.target.value)
 	}
+
+	async function handleLogout() {
+		setError("")
+	
+		try {
+		  await logout()
+		  navigate("/log-in")
+		} catch {
+		  setError("Failed to log out")
+		}
+	  }
 	return (
 		<>
 			<div>
@@ -98,6 +115,12 @@ const User = () => {
 					</div>
 				</div>
 			</div>
+
+			<div className="w-100 text-center mt-2">
+        <button variant="link" onClick={handleLogout}>
+          Log Out
+        </button>
+      </div>
 		</>
 	);
 };
