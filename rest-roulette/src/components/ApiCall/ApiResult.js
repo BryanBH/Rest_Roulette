@@ -8,15 +8,12 @@ import { finalCusine, longitude, latitude } from "../../pages/Roulette";
 import { Map, Marker } from "pigeon-maps";
 import { stamenTerrain } from "pigeon-maps/providers";
 
-let firstLat;
-let firstLong;
+
 let cords = [];
 const ApiResult = () => {
 	const [businesses, setBusinesses] = useState();
-	// const [firstCords, setFirstCords] = useState();
-	// const [firstLat, setFirstLat] = useState();
-	// const [firstLong, setFirstLong] = useState();
 	const [coordinates, setCords] = useState([]);
+	
 	useEffect(() => {
 		// call to local server
 		axios
@@ -29,9 +26,6 @@ const ApiResult = () => {
 			})
 			.then((response) => {
 				const responseBusinesses = response.data.object;
-				firstLat = responseBusinesses[0].coordinates.latitude;
-				firstLong = responseBusinesses[0].coordinates.longitude;
-				// setCords(firstLat,firstLong)
 				setBusinesses(responseBusinesses);
 			});
 	}, []);

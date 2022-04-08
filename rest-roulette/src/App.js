@@ -34,9 +34,7 @@ function App() {
 				<Route path="log-in" element={<LogIn />} />
 				<Route path="User" element={<User />} />
 			</Routes>
-
-		</AuthProvider>
-
+			</AuthProvider>
 		</Router>
 
 

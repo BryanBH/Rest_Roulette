@@ -19,7 +19,7 @@ app.get("/getYelpAPI", (req, res) => {
 		// location: req.query.location,
 		latitude: req.query.latitude,
 		longitude: req.query.longitude,
-		limit: 15,
+		limit: 20,
 	};
 	const client = yelp.client(key);
 
@@ -46,7 +46,7 @@ app.get("/getYelpAPI", (req, res) => {
 					distance: business.distance,
 					url: business.url,
 					id: business.id,
-					coordinates:business.coordinates
+					coordinates: business.coordinates,
 				});
 			}
 			// sending created object back to the ApiResult component
