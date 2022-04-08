@@ -46,8 +46,7 @@ app.get("/getYelpAPI", (req, res) => {
 					distance: business.distance,
 					url: business.url,
 					id: business.id,
-					longitude:business.coordinates.longitude,
-					latitude: business.coordinates.latitude,
+					coordinates:business.coordinates
 				});
 			}
 			// sending created object back to the ApiResult component

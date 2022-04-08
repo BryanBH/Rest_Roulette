@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "../../css/Results.css";
 import "../../css/bootstrap.min.css";
-import "../../css/simple-line-icons.css"
+import "../../css/simple-line-icons.css";
 import { NavBtn, NavBtnLink } from "../../components/Navbar/NavbarElement";
 import axios from "axios";
 import { finalCusine, longitude, latitude } from "../../pages/Roulette";
-import { Map, Marker } from "pigeon-maps"
-import { stamenTerrain } from 'pigeon-maps/providers'
+import { Map, Marker } from "pigeon-maps";
+import { stamenTerrain } from "pigeon-maps/providers";
 
+let firstLat;
+let firstLong;
+let cords = [];
 const ApiResult = () => {
 	const [businesses, setBusinesses] = useState();
-	const [cords, setCords] = useState();
+	// const [firstCords, setFirstCords] = useState();
+	// const [firstLat, setFirstLat] = useState();
+	// const [firstLong, setFirstLong] = useState();
+	const [coordinates, setCords] = useState([]);
 	useEffect(() => {
 		// call to local server
 		axios
@@ -23,10 +29,19 @@ const ApiResult = () => {
 			})
 			.then((response) => {
 				const responseBusinesses = response.data.object;
+				firstLat = responseBusinesses[0].coordinates.latitude;
+				firstLong = responseBusinesses[0].coordinates.longitude;
+				// setCords(firstLat,firstLong)
 				setBusinesses(responseBusinesses);
 			});
 	}, []);
 
+
+	const handleCordsUpdate = (latitude, longitude) => {
+		cords = [latitude, longitude];
+		console.log(`cords updated: ${cords}`);
+		setCords(cords)
+	}
 	return (
 		<>
 			<div>
@@ -37,63 +52,103 @@ const ApiResult = () => {
 							<div className="col-md-7 responsive-wrap">
 								<div className="row detail-filter-wrap">
 									<div className="col-md-4 featured-responsive">
-										<div className="detail-filter-text" style={{
-											display: "flex",
-											justifyContent: "space-evenly",
-										}}>
+										<div
+											className="detail-filter-text"
+											style={{
+												display: "flex",
+												justifyContent: "space-evenly",
+											}}>
 											<p>
 												Results For{" "}
 												{`${finalCusine
 													.charAt(0)
 													.toUpperCase()}${finalCusine.slice(
-														1
-													)}`}
+													1
+												)}`}
 											</p>
 											<NavBtn>
-												<NavBtnLink to="/roulette">Back to wheel</NavBtnLink>
+												<NavBtnLink to="/roulette">
+													Back to wheel
+												</NavBtnLink>
 											</NavBtn>
 										</div>
 									</div>
-									<div className="col-md-8 featured-responsive">
-									</div>
+									<div className="col-md-8 featured-responsive"></div>
 								</div>
 								<div className="row light-bg detail-options-wrap">
 									{businesses &&
 										businesses.map((business) => {
-											const { name, rating, phoneNumber, imageUrl, address, price, reviewNum, distance, url, street, city, state, zipcode, longitude, latitude } = business;
+											const {
+												name,
+												rating,
+												phoneNumber,
+												imageUrl,
+												price,
+												reviewNum,
+												url,
+												street,
+												city,
+												state,
+												zipcode,
+												coordinates,
+											} = business;
 											return (
 												<div className="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
 													<div className="featured-place-wrap">
-
-														<img src={imageUrl} height="400px" overflow="hidden" alt="#" />
-														<span className="featured-rating-orange ">{rating}</span>
+														<img
+															src={imageUrl}
+															height="400px"
+															overflow="hidden"
+															alt="#"
+														/>
+														<span className="featured-rating-orange ">
+															{rating}
+														</span>
 														<div className="featured-title-box">
 															<h5>{name}</h5>
-															{reviewNum} Reviews <span> • </span> {price}
+															{
+																reviewNum
+															} Reviews{" "}
+															<span> • </span>{" "}
+															{price}
 															<ul>
-																<li><span className="icon-location-pin" />
-																	{street}, {city}, {state} {zipcode}
-																</li>
-																<li><span className="icon-screen-smartphone" />
-																	{phoneNumber}
-																</li>
-																<li><span className="" />
-																	<a href={url} target="_blank">See More Info</a>
+																<li>
+																	<span className="icon-location-pin" />
+																	{street},{" "}
+																	{city},{" "}
+																	{state}{" "}
+																	{zipcode}
 																</li>
 																<li>
-
-																	<button onClick={() => setCords({ latitude }, { longitude })}>
-																		Location
-																	</button>
-
-																	{latitude} {longitude}
+																	<span className="icon-screen-smartphone" />
+																	{
+																		phoneNumber
+																	}
+																</li>
+																<li>
+																	<span className="" />
+																	<a
+																		href={
+																			url
+																		}
+																		target="_blank"
+																		rel="noreferrer">
+																		See More
+																		Info
+																	</a>
 																</li>
 															</ul>
+															<button
+																onClick={() => handleCordsUpdate(
+																	coordinates.latitude,
+																	coordinates.longitude
+																)}>
+																Location
+															</button>
 															<div className="bottom-icons">
 																<span className="ti-bookmark" />
 															</div>
 														</div>
-
 													</div>
 												</div>
 											);
@@ -106,12 +161,32 @@ const ApiResult = () => {
 								<>
 									<br></br>
 									<section className="light-bg booking-details_wrap, sticky-top">
-										<div className="container" height="1000px">
+										<div
+											className="container"
+											height="1000px">
 											<br></br>
-											<p>{cords}</p>
 
-											<Map height={900} defaultCenter={[{cords}]} defaultZoom={16} provider={stamenTerrain}>
-												<Marker width={50} anchor={[{cords}]} />
+											<Map
+												height={900}
+												defaultCenter={[
+													latitude,
+													longitude,
+												]}
+												defaultZoom={15}
+												provider={stamenTerrain}>
+												<Marker
+													width={50}
+													anchor={[
+														latitude,
+														longitude,
+													]}
+													color={`hsl(240,100%,50%,1.0)`}
+												/>
+												<Marker
+													width={50}
+													anchor={coordinates ? coordinates : null}
+													color={`hsl(0, 100%, 50%, 1.0)`}
+												/>
 											</Map>
 
 											<br></br>
@@ -127,7 +202,6 @@ const ApiResult = () => {
 				{/* jQuery, Bootstrap JS. */}
 				{/* jQuery first, then Popper.js, then Bootstrap JS */}
 			</div>
-
 		</>
 	);
 };
