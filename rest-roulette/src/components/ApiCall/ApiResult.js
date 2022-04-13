@@ -7,13 +7,16 @@ import axios from "axios";
 import { finalCusine, longitude, latitude } from "../../pages/Roulette";
 import { Map, Marker } from "pigeon-maps";
 import { stamenTerrain } from "pigeon-maps/providers";
-
+// DB stuff
+import { database } from "../../firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { useAuth } from "../../contexts/AuthContext";
 
 let cords = [];
 const ApiResult = () => {
 	const [businesses, setBusinesses] = useState();
 	const [coordinates, setCords] = useState([]);
-	
+
 	useEffect(() => {
 		// call to local server
 		axios
@@ -30,12 +33,30 @@ const ApiResult = () => {
 			});
 	}, []);
 
-
 	const handleCordsUpdate = (latitude, longitude) => {
 		cords = [latitude, longitude];
 		console.log(`cords updated: ${cords}`);
-		setCords(cords)
-	}
+		setCords(cords);
+	};
+
+	// restaurant name, image, phone number and rating
+	const dbInstance = collection(database, "Restaurants");
+	const { currentUser } = useAuth();
+	const saveRestaurant = (business) => {
+		addDoc(dbInstance, {
+			restaurantName: business.name,
+			image: business.imageUrl,
+			phoneNumber: business.phoneNumber,
+			rating: business.rating,
+			userId: currentUser._delegate.uid,
+		})
+			.then(() => {
+				alert("Restaurant was saved");
+			})
+			.catch((err) => {
+				alert(err.message);
+			});
+	};
 	return (
 		<>
 			<div>
@@ -133,14 +154,24 @@ const ApiResult = () => {
 																</li>
 															</ul>
 															<button
-																onClick={() => handleCordsUpdate(
-																	coordinates.latitude,
-																	coordinates.longitude
-																)}>
+																onClick={() =>
+																	handleCordsUpdate(
+																		coordinates.latitude,
+																		coordinates.longitude
+																	)
+																}>
 																Location
 															</button>
 															<div className="bottom-icons">
-																<span className="ti-bookmark" />
+																{/* <span className="ti-bookmark" /> */}
+																<button
+																	onClick={() =>
+																		saveRestaurant(
+																			business
+																		)
+																	}>
+																	Bookmark
+																</button>
 															</div>
 														</div>
 													</div>
@@ -178,7 +209,11 @@ const ApiResult = () => {
 												/>
 												<Marker
 													width={50}
-													anchor={coordinates ? coordinates : null}
+													anchor={
+														coordinates
+															? coordinates
+															: null
+													}
 													color={`hsl(0, 100%, 50%, 1.0)`}
 												/>
 											</Map>

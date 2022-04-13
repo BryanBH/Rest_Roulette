@@ -11,12 +11,10 @@ import allowedCategories from "../json/categories.json";
 const data = [
 	// { option: "chinese", label: "Chinese" },
 	{ option: "Mexican", label: "Mexican" },
-	{ option: "Italian", label: "Italian" },
 	{ option: "Korean", label: "Korean" },
 	{ option: "Greek", label: "Greek" },
 	{ option: "Spanish", label: "Spanish" },
 	{ option: "Moroccan", label: "Moroccan" },
-	{ option: "Japanese", label: "Japanese" },
 	{ option: "Colombian", label: "Colombian" },
 ];
 
