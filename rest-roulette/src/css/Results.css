@@ -4,6 +4,17 @@
 body {
   font-family: 'Roboto', sans-serif; }
 
+.icon {
+  height: 30px;
+  width: 10px;
+}
+
+.yelp {
+  height: 30px;
+  width: 40px;
+}
+
+
 h1 {
   font-size: 72px;
   color: #fff;

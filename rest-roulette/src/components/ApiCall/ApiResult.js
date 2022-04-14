@@ -6,16 +6,24 @@ import { NavBtn, NavBtnLink } from "../../components/Navbar/NavbarElement";
 import axios from "axios";
 import { finalCusine, longitude, latitude } from "../../pages/Roulette";
 import { Map, Marker } from "pigeon-maps";
+import locationicon from "../../images/locationicon.png";
+import yelpicon from "../../images/yelp.png";
+import bookmarkicon from "../../images/bookmark.png";
 import { stamenTerrain } from "pigeon-maps/providers";
+// import { Dropdown } from 'react-bootstrap';
+// import { DropdownButton } from 'react-bootstrap';
+
 // DB stuff
 import { database } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
 
 let cords = [];
+// let sort = "";
 const ApiResult = () => {
 	const [businesses, setBusinesses] = useState();
 	const [coordinates, setCords] = useState([]);
+	// const [sort_by, setSort] = useState("best_match");
 
 	useEffect(() => {
 		// call to local server
@@ -25,6 +33,7 @@ const ApiResult = () => {
 					categories: finalCusine,
 					latitude: latitude,
 					longitude: longitude,
+					sort_by: "distance",
 				},
 			})
 			.then((response) => {
@@ -38,6 +47,14 @@ const ApiResult = () => {
 		console.log(`cords updated: ${cords}`);
 		setCords(cords);
 	};
+
+	// const handleSortUpdate = (sortby) => {
+	// 	// if (sort_by == null){
+	// 	// }
+	// 	sort = [sortby];
+	// 	console.log(`sortby updated: ${sort}`);
+	// 	setSort(sort)
+	// }
 
 	// restaurant name, image, phone number and rating
 	const dbInstance = collection(database, "Restaurants");
@@ -78,14 +95,27 @@ const ApiResult = () => {
 												{`${finalCusine
 													.charAt(0)
 													.toUpperCase()}${finalCusine.slice(
-													1
-												)}`}
+														1
+													)}`}
 											</p>
 											<NavBtn>
 												<NavBtnLink to="/roulette">
 													Back to wheel
 												</NavBtnLink>
 											</NavBtn>
+											{/* <DropdownButton id="dropdown-item-button" title="Sort By:">
+												<Dropdown.Item as="button">
+													<div onChange={() => handleSortUpdate("best_match"
+																		)}>Best Match</div></Dropdown.Item>
+												<Dropdown.Item as="button">
+												<div onChange={() => handleSortUpdate("distance"
+																		)}>Distance</div>
+												</Dropdown.Item>
+												<Dropdown.Item as="button">
+												<div onChange={() => handleSortUpdate("rating"
+																		)}>Ratings</div>
+												</Dropdown.Item>
+											</DropdownButton> */}
 										</div>
 									</div>
 									<div className="col-md-8 featured-responsive"></div>
@@ -109,7 +139,10 @@ const ApiResult = () => {
 											} = business;
 											return (
 												<div className="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
-													<div className="featured-place-wrap">
+													<div className="featured-place-wrap" onClick={() => handleCordsUpdate(
+																			coordinates.latitude,
+																			coordinates.longitude
+																		)}>
 														<img
 															src={imageUrl}
 															height="400px"
@@ -141,37 +174,47 @@ const ApiResult = () => {
 																	}
 																</li>
 																<li>
-																	<span className="" />
-																	<a
-																		href={
-																			url
-																		}
-																		target="_blank"
-																		rel="noreferrer">
-																		See More
-																		Info
-																	</a>
-																</li>
-															</ul>
-															<button
-																onClick={() =>
-																	handleCordsUpdate(
-																		coordinates.latitude,
-																		coordinates.longitude
-																	)
-																}>
-																Location
-															</button>
-															<div className="bottom-icons">
-																{/* <span className="ti-bookmark" /> */}
-																<button
-																	onClick={() =>
+																	{/* <button><img src={locationicon} className="icon" 
+																		onClick={() => handleCordsUpdate(
+																			coordinates.latitude,
+																			coordinates.longitude
+																		)}/>
+																		
+																	</button> */}
+																	{/* <p>&nbsp;&nbsp;</p>
+																	<button>
+																		<a href={url}
+																			target="_blank"
+																			rel="noreferrer">
+																			<img src={yelpicon} className="yelp" />
+																		</a>
+																	</button>
+																	<p>&nbsp;&nbsp;</p>
+																	<button><img src={bookmarkicon} className="icon" onClick={() =>
 																		saveRestaurant(
 																			business
 																		)
-																	}>
-																	Bookmark
-																</button>
+																	} />
+																	</button> */}
+																</li>
+															</ul>
+
+															<div className="bottom-icons">
+																{/* <span className="ti-bookmark" /> */}
+																<button>
+																		<a href={url}
+																			target="_blank"
+																			rel="noreferrer">
+																			<img src={yelpicon} className="yelp" />
+																		</a>
+																	</button>
+																	<p>&nbsp;&nbsp;</p>
+																	<button><img src={bookmarkicon} className="icon" onClick={() =>
+																		saveRestaurant(
+																			business
+																		)
+																	} />
+																	</button>
 															</div>
 														</div>
 													</div>
