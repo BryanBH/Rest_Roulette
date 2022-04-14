@@ -1,5 +1,5 @@
 import Logo from "../images/forks-transparent.png";
-import image from "../images/image.jpg";
+import profile from "../images/image.jpg";
 import "../css/Homepage.css";
 import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
 import "../css/user.css";
@@ -10,23 +10,47 @@ import { useAuth } from "../contexts/AuthContext";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../firebase";
 
+
 const User = () => {
-	var nameIsShown = false;
-	const [name, setName] = useState(null);
-	const [email, setEmail] = useState(null);
-	const [printName, setPrintN] = useState(false);
-	const [printEmail, setPrintE] = useState(false);
-	const [showN, setShowN] = useState(false);
-	const [showE, setShowE] = useState(false);
+	const [userName, setUserN] = useState();
+	const [restName, setName] = useState([]);
+	const [restNum, setNum] = useState([]);
+	const [restRate, setRate] = useState([]);
+	const [restImage, setImage] = useState([]);
+	useEffect(() => {
+		getData();
+	  }, []);
+	  const Frame = () => {
+		return (
+			<div className="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
+				<div className="featured-place-wrap">
+					<img
+					src={restImage}
+					height="400px"
+					overflow="hidden"
+					alt="#"
+					/>
+					<span className="featured-rating-orange ">
+						{restRate}
+					</span>
+					<div className="featured-title-box">
+						<h5>{restName}</h5>
+						<ul>
+							<li>
+								<span className="icon-screen-smartphone" />
+								{
+									restNum
+								}
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		);
+	}
 	const [error, setError] = useState("");
 	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
-	function getName(val) {
-		setName(val.target.value);
-	}
-	function getEmail(val) {
-		setEmail(val.target.value);
-	}
 
 	async function handleLogout() {
 		setError("");
@@ -38,28 +62,47 @@ const User = () => {
 			setError("Failed to log out");
 		}
 	}
-
+  
 	const dbInstance = collection(database, "Restaurants");
+	const username = collection(database, "users");
 	const [restaurantTable, setRestaurantTable] = useState();
+	
 	
 	const getData = async () => {
 		const data = await getDocs(dbInstance);
-		console.log(`User id: ${currentUser._delegate.uid}`);
+		const names = await getDocs(username);
 		const obj = data.docs.map((item) => {
 			return { ...item.data(), id: item.id };
 		});
-		console.log(obj);
+		const o = names.docs.map((t) => {
+			return { ...t.data(), id: t.id };
+		});
 		const userArray = [];
+		const nameArray = [];
 		for (let index of obj) {
-			console.log(index);
 			if (currentUser._delegate.uid === index.userId) {
 				userArray.push(index);
 			}
 		}
-
-		console.log(userArray);
+		for (let i of o) {
+			if(currentUser._delegate.uid == i.uid)
+			{
+				nameArray.push(i);
+			}
+		}
+		
+		console.log(nameArray)
 		return (
 			<div>
+				{nameArray &&
+					nameArray.map((item) => {
+						const {
+							uid,
+							name
+						} = item;
+						setUserN(name)
+						console.log(name)
+					})}
 				{userArray &&
 					userArray.map((item) => {
 						const {
@@ -69,20 +112,18 @@ const User = () => {
 							restaurantName,
 							id,
 						} = item;
-
-						<div>
-							<img src={image} alt="restaurant" />
-							<h2 key={id}>{restaurantName}</h2>
-							<h3>{phoneNumber}</h3>
-							<h3>{rating}</h3>
-						</div>;
+						setName(restaurantName)
+						setImage(image)
+						setNum(phoneNumber)
+						setRate(rating)
+						
 					})}
+					
 			</div>
 		);
 	};
 
 	return (
-		<>
 			<div>
 				<div>
 					<div
@@ -93,7 +134,7 @@ const User = () => {
 							margin: "18px,0px",
 						}}>
 						<img
-							src={image}
+							src={profile}
 							alt="logo"
 							className="image-logo"
 							style={{
@@ -110,7 +151,7 @@ const User = () => {
 							alignItems: "center",
 							margin: "18px,0px",
 						}}>
-						<h1>Name</h1>
+						<h1><strong>Name</strong></h1>
 					</div>
 					<div
 						style={{
@@ -120,24 +161,12 @@ const User = () => {
 							margin: "18px,0px",
 						}}>
 						{currentUser ? (
-							<h4>{currentUser.name}</h4>
+							<h4>{userName}</h4>
 						) : (
-							"William Jordan"
+							""
 						)}
 
-						<button onClick={() => setShowN(!showN)}>Edit</button>
-						{showN ? (
-							<input
-								type="text"
-								onChange={getName}
-								required={true}
-							/>
-						) : null}
-						{showN ? (
-							<button onClick={() => setPrintN(true)}>
-								Confirm
-							</button>
-						) : null}
+						
 					</div>
 					<br></br>
 					<div
@@ -147,7 +176,10 @@ const User = () => {
 							alignItems: "center",
 							margin: "18px,0px",
 						}}>
-						<h1>Email</h1>
+						<h1><strong>Email</strong></h1>
+						<br></br>
+						<div><h3>{" " + currentUser.email}</h3></div>
+							
 					</div>
 					<div
 						style={{
@@ -156,20 +188,7 @@ const User = () => {
 							alignItems: "center",
 							margin: "18px,0px",
 						}}>
-						{printEmail ? <h4>{email}</h4> : "JordanW1@wit.edu"}
-						<button onClick={() => setShowE(!showE)}>Edit</button>
-						{showE ? (
-							<input
-								type="text"
-								onChange={getEmail}
-								required={true}
-							/>
-						) : null}
-						{showE ? (
-							<button onClick={() => setPrintN(true)}>
-								Confirm
-							</button>
-						) : null}
+
 					</div>
 					<br></br>
 					<div
@@ -179,19 +198,28 @@ const User = () => {
 							alignItems: "center",
 							margin: "18px,0px",
 						}}>
-						<h1>Bookmarks</h1>
-						<button onClick={getData}>See BookMarks</button>
+						<h1><strong>Bookmarks</strong></h1>
+						
 					</div>
+					<br></br>
+					<div style={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							margin: "18px,0px",
+						}}> <Frame></Frame>
 				</div>
 			</div>
 
 			<div className="w-100 text-center mt-2">
-				<button variant="link" onClick={handleLogout}>
+			<button variant="link" onClick={handleLogout}>
 					Log Out
 				</button>
 			</div>
-		</>
+			<div>
+				<br></br>
+			</div>
+			</div>
 	);
 };
-
 export default User;
