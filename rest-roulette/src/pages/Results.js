@@ -15,7 +15,6 @@ export default class Result extends React.Component {
 					alignItems: "center",
 					flexDirection: "column",
 				}}>
-
 				<ApiResult />
 
 

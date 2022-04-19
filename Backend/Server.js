@@ -18,7 +18,7 @@ app.get("/getYelpAPI", (req, res) => {
 		categories: req.query.categories,
 		latitude: req.query.latitude,
 		longitude: req.query.longitude,
-		limit: 25,
+		limit: 50,
 	};
 	const client = yelp.client(key);
 

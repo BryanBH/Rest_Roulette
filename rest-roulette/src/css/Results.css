@@ -127,16 +127,16 @@ p {
       font-weight: 500; }
 
 .detail-filter {
-  text-align: right; }
-  @media (max-width: 992px) {
-    .detail-filter {
-      text-align: left; } }
+  text-align: right; 
+  margin-right: 40px;}
+  
   .detail-filter p {
     font-weight: 300;
     color: #3e434b;
     font-size: 14px;
     display: inline-block;
-    margin: 0 10px 0 0; }
+    margin: 0 10px 0 0;
+   }
 
 .detail-options-wrap {
   padding: 15px 0; }

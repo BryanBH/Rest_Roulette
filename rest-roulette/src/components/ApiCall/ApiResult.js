@@ -15,7 +15,6 @@ import defaultPhoto from "../../images/foodDefault.jpg";
 import yelpicon from "../../images/yelp.png";
 import bookmarkicon from "../../images/bookmark.png";
 
-
 // DB stuff
 import { database } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
@@ -124,6 +123,10 @@ const ApiResult = () => {
 													Back to wheel
 												</NavBtnLink>
 											</NavBtn>
+										</div>
+									</div>
+									<div className="col-md-8 featured-responsive">
+										<div className="detail-filter">
 											{/* Sort By function */}
 											<DropdownButton id="dropdown-item-button" title="Sort By:">
 												<Dropdown.Item as="button">
@@ -137,7 +140,6 @@ const ApiResult = () => {
 											</DropdownButton>
 										</div>
 									</div>
-									<div className="col-md-8 featured-responsive"></div>
 								</div>
 								<div className="row light-bg detail-options-wrap">
 									{/* Mapping Function for businesses */}
