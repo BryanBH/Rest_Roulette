@@ -6,7 +6,7 @@ Rest Roulette provides a chance-based approach to picking out a restaurant.
 Sign up and save your favorites.
 
 # Required 
-Node JS is required to be downloaded and installed in your device in order to run application.
+Node JS is required to be downloaded and installed in your device in order to run the application.
 
 # Instructions 
 * Clone this repository.
