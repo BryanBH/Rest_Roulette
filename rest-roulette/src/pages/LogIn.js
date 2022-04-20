@@ -1,10 +1,12 @@
 import "../css/LogIn.css";
-
 import React, { useRef, useState } from "react";
-
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+
+/**
+ * Login function to be export for react use
+ */
 const LogIn = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -15,6 +17,12 @@ const LogIn = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
+
+	/**
+	 * Function to handle form submit. Uses form refs to verify user login
+	 * Navigates to roulette page upon successful login
+	 * @param {*} event
+	 */
 	async function handleSubmit(e) {
 		e.preventDefault();
 
