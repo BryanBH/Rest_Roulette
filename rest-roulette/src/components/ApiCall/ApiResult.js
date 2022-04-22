@@ -85,7 +85,7 @@ const ApiResult = () => {
 			image: business.imageUrl,
 			phoneNumber: business.phoneNumber,
 			rating: business.rating,
-			userId: currentUser._delegate.uid,
+			userId: currentUser.uid,
 		})
 			.then(() => {
 				alert("Restaurant was saved");

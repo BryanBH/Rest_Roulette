@@ -2,7 +2,7 @@
 import profile from "../images/image.jpg";
 import "../css/user.css";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../firebase";
@@ -87,7 +87,7 @@ const User = () => {
 			}
 		}
 		for (let i of o) {
-			if(currentUser.uid == i.uid)
+			if(currentUser.uid === i.uid)
 			{
 				nameArray.push(i);
 			}
@@ -99,7 +99,6 @@ const User = () => {
 				{nameArray &&
 					nameArray.map((item) => {
 						const {
-							uid,
 							name
 						} = item;
 						setUserN(name)
@@ -112,7 +111,6 @@ const User = () => {
 							phoneNumber,
 							rating,
 							restaurantName,
-							id,
 						} = item;
 						setName(restaurantName)
 						setImage(image)
