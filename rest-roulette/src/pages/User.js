@@ -1,17 +1,15 @@
-import Logo from "../images/forks-transparent.png";
+//Importing necessary files/assests
 import profile from "../images/image.jpg";
-import "../css/Homepage.css";
-import { NavBtn, NavBtnLink } from "../components/Navbar/NavbarElement";
 import "../css/user.css";
-// import EditButton from 'react-edit-button'
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { collection, getDocs } from "firebase/firestore";
 import { database } from "../firebase";
 
-
+//Main function
 const User = () => {
+	//Sets the users namme, restuarant name, number, rating, and image
 	const [userName, setUserN] = useState();
 	const [restName, setName] = useState([]);
 	const [restNum, setNum] = useState([]);
@@ -19,7 +17,8 @@ const User = () => {
 	const [restImage, setImage] = useState([]);
 	useEffect(() => {
 		getData();
-	  }, []);
+	  }, [])
+	  //Call to display bookmarks 
 	  const Frame = () => {
 		return (
 			<div className="col-sm-6 col-lg-12 col-xl-6 featured-responsive">
@@ -48,10 +47,12 @@ const User = () => {
 			</div>
 		);
 	}
+	//Used for logout
 	const [error, setError] = useState("");
 	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
 
+	//Logout function
 	async function handleLogout() {
 		setError("");
 
@@ -63,11 +64,12 @@ const User = () => {
 		}
 	}
   
+	//Get's the database for users and restaurants
 	const dbInstance = collection(database, "Restaurants");
 	const username = collection(database, "users");
-	const [restaurantTable, setRestaurantTable] = useState();
+
 	
-	
+	//Gets all the variables from the database
 	const getData = async () => {
 		const data = await getDocs(dbInstance);
 		const names = await getDocs(username);
@@ -80,12 +82,12 @@ const User = () => {
 		const userArray = [];
 		const nameArray = [];
 		for (let index of obj) {
-			if (currentUser._delegate.uid === index.userId) {
+			if (currentUser.uid === index.userId) {
 				userArray.push(index);
 			}
 		}
 		for (let i of o) {
-			if(currentUser._delegate.uid == i.uid)
+			if(currentUser.uid == i.uid)
 			{
 				nameArray.push(i);
 			}
@@ -116,13 +118,12 @@ const User = () => {
 						setImage(image)
 						setNum(phoneNumber)
 						setRate(rating)
-						
 					})}
 					
 			</div>
 		);
 	};
-
+	// The code to display the page
 	return (
 			<div>
 				<div>
