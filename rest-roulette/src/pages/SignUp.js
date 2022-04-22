@@ -4,20 +4,29 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { database } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
+import { findDOMNode } from "react-dom";
 
+	/**
+	 * Signup function exported for use in react pages
+	 */
 export default function SignUp() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const nameRef = useRef();
 	const confirmRef = useRef();
 	const { signup, currentUser } = useAuth();
-
 	const [error, setError] = useState("");
-
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
 	const dbInstanace = collection(database, "users");
+
+	/**
+	 * Function to handle form submit. Uses form refs to pass user information to databsae.
+	 * Navigates to roulette page upon successful submission
+	 * @param {*} event
+	 * @returns error if passwords do not mach
+	 */
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -115,4 +124,4 @@ export default function SignUp() {
 	);
 }
 
-// export default SignUp;
+

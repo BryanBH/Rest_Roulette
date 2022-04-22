@@ -16,11 +16,9 @@ app.get("/getYelpAPI", (req, res) => {
 
 	var options = {
 		categories: req.query.categories,
-		// location: req.query.location,
 		latitude: req.query.latitude,
 		longitude: req.query.longitude,
-		sort_by: req.query.sort_by,
-		limit: 15,
+		limit: 50,
 	};
 	const client = yelp.client(key);
 
@@ -58,6 +56,7 @@ app.get("/getYelpAPI", (req, res) => {
 		});
 });
 
+// Email Stuff
 const contactEmail = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
