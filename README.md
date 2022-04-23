@@ -25,6 +25,9 @@ Node JS is required to be downloaded and installed in your device in order to ru
 * Once the wheel has finished its animation and you are content with the selected restaurant catgeory, click "See Results".
 * Look at resulting restaurants, click on "Yelp button for more information or sign up to bookmark your favorite restaurants. 
 
+# Demo
+[Rest Roulette Demo Video](https://www.youtube.com/watch?v=DA4mXJHQTdg)
+
 # Collaborators 
 * [Bryan Benjumea](https://github.com/BryanBH)
 * [Ryan Li](https://github.com/ryanli189)
