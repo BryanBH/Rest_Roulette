@@ -175,9 +175,9 @@ const User = () => {
 							alignItems: "center",
 							margin: "18px,0px",
 						}}>
-						<h1><strong>Email</strong></h1>
+						<h1><strong>Email:</strong></h1>
 						<br></br>
-						<div><h3>{" " + currentUser.email}</h3></div>
+						<div><h2>{" " + currentUser.email}</h2></div>
 							
 					</div>
 					<div
@@ -205,7 +205,8 @@ const User = () => {
 							display: "flex",
 							justifyContent: "center",
 							alignItems: "center",
-							margin: "18px,0px",
+							margin: "auto",
+							width: "50%"
 						}}> <Frame></Frame>
 				</div>
 			</div>
